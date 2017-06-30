@@ -118,6 +118,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.buttonrest:
+                if (a.equals("")) {
+                    tv.setText("-");
+                }
+                else {
+                    if (primero) {
+                        primero = false;
+                        restatorio = Double.parseDouble(a);
+                    }
+                    else {
+                        restatorio = restatorio - Double.parseDouble(a);
+                    }
+                    tv.setText("");
+                    decimal = true;
+                    resta = true;
+                }
                 break;
             case R.id.buttonpoint:
                 if (a.equals("")) {
@@ -146,15 +161,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else {
                     if (primero) {
                         primero = false;
-                        divi = true;
-                        decimal = true;
                         divisor = Double.parseDouble(a);
                     }
                     else {
                         divisor = divisor / Double.parseDouble(a);
-                        decimal = true;
-                        divi = true;
                     }
+                    decimal = true;
+                    divi = true;
                     tv.setText("");
                 }
                 break;
@@ -180,6 +193,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         tv.setText(resultado.toString());
                         divisor = 1.0;
                         divi = false;
+                    }
+                    else if (resta) {
+                        resultado = restatorio - Double.parseDouble(a);
+                        tv.setText(resultado.toString());
+                        restatorio = 0.0;
+                        resta = false;
                     }
                     primero = true;
                 }
