@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    boolean decimal = true,suma = false,resta = false,multi = false,divi= false,primero = true;
-    Double sumatorio = 0.0,restatorio = 0.0,multiplicador = 1.0,divisor = 1.0,resultado = 0.0;
+    boolean decimal = true,sum = false,rest = false,mult = false,div = false;
+    Double resultado = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonreset:
                 decimal = true;
-                primero = true;
                 tv.setText("");
                 break;
             case R.id.buttondel:
@@ -111,10 +110,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 else {
-                    sumatorio = sumatorio + Double.parseDouble(a);
+                    if (resultado == 0) {
+                        resultado = Double.parseDouble(a);
+                    }
+                    else {
+                        resultado = resultado + Double.parseDouble(a);
+                    }
                     tv.setText("");
                     decimal = true;
-                    suma = true;
+                    sum = true;
+                    rest = false;
+                    mult = false;
+                    div = false;
                 }
                 break;
             case R.id.buttonrest:
@@ -122,16 +129,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tv.setText("-");
                 }
                 else {
-                    if (primero) {
-                        primero = false;
-                        restatorio = Double.parseDouble(a);
+                    if (resultado == 0) {
+                        resultado = Double.parseDouble(a);
                     }
                     else {
-                        restatorio = restatorio - Double.parseDouble(a);
+                        resultado = resultado - Double.parseDouble(a);
                     }
                     tv.setText("");
                     decimal = true;
-                    resta = true;
+                    sum = false;
+                    rest = true;
+                    mult = false;
+                    div = false;
                 }
                 break;
             case R.id.buttonpoint:
@@ -148,10 +157,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 else {
-                    multiplicador = multiplicador * Double.parseDouble(a);
+                    if (resultado == 0) {
+                        resultado = Double.parseDouble(a);
+                    }
+                    else {
+                        resultado = resultado * Double.parseDouble(a);
+                    }
                     tv.setText("");
                     decimal = true;
-                    multi = true;
+                    sum = false;
+                    rest = false;
+                    mult = true;
+                    div = false;
                 }
                 break;
             case R.id.buttondiv:
@@ -159,16 +176,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 else {
-                    if (primero) {
-                        primero = false;
-                        divisor = Double.parseDouble(a);
+                    if (resultado == 0) {
+                        resultado = Double.parseDouble(a);
                     }
                     else {
-                        divisor = divisor / Double.parseDouble(a);
+                        resultado = resultado / Double.parseDouble(a);
                     }
-                    decimal = true;
-                    divi = true;
                     tv.setText("");
+                    decimal = true;
+                    sum = false;
+                    rest = false;
+                    mult = false;
+                    div = true;
                 }
                 break;
             case R.id.buttonequal:
@@ -176,32 +195,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 else {
-                    if (suma) {
-                        resultado = Double.parseDouble(a) + sumatorio;
+                    if (sum) {
+                        resultado = Double.parseDouble(a) + resultado;
                         tv.setText(resultado.toString());
-                        sumatorio = 0.0;
-                        suma = false;
+                        sum = false;
                     }
-                    else if (multi) {
-                        resultado = Double.parseDouble(a) * multiplicador;
+                    else if (mult) {
+                        resultado = Double.parseDouble(a) * resultado;
                         tv.setText(resultado.toString());
-                        multiplicador = 1.0;
-                        multi = false;
+                        mult = false;
                     }
-                    else if (divi) {
-                        resultado = divisor / Double.parseDouble(a);
+                    else if (div) {
+                        resultado = resultado / Double.parseDouble(a);
                         tv.setText(resultado.toString());
-                        divisor = 1.0;
-                        divi = false;
+                        div = false;
                     }
-                    else if (resta) {
-                        resultado = restatorio - Double.parseDouble(a);
+                    else if (rest) {
+                        resultado = resultado - Double.parseDouble(a);
                         tv.setText(resultado.toString());
-                        restatorio = 0.0;
-                        resta = false;
+                        rest = false;
                     }
-                    primero = true;
                 }
+                resultado = 0.0;
                 break;
         }
 
